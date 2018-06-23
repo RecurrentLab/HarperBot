@@ -1,4 +1,6 @@
 Data/
 *floyd*
 *tar
+.vscode/
+datastore/*
 
