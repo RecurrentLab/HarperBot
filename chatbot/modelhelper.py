@@ -12,6 +12,21 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ==============================================================================
+
+""" Helper functions used when creating the model.
+
+This module contains several TF wrappers for creating the final model:
+    1. get_initializer => Return the chosen weight initializer
+        - Only supports a random uniform, glorot_uniform, or glorot_normal
+    2. get_device_str => Unused but would be used if being trained on GPUs
+    3. create_embbeding => Defines embedding matrix of shape (vocab_size, embed_size)
+    4. _single_cell => Defines one GRU cell with Dropout
+    5. create_rnn_cell => Defines an L-layers of an RNN
+    6. gradient_clip => Defines the gradient clipping - prevent exploding gradients
+
+"""
+
+
 import tensorflow as tf
 
 
