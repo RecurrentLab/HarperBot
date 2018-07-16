@@ -27,6 +27,7 @@ class ModelCreator(object):
         Args:
             training: A boolean value to indicate whether this model will be used for training.
             tokenized_data: The data object containing all information required for the model.
+            batch_input: Batched and bucketed data
             scope: scope of the model.
         """
         self.training = training
@@ -150,6 +151,7 @@ class ModelCreator(object):
         with tf.variable_scope("encoder") as scope:
             dtype = scope.dtype
             # Look up embedding, emp_inp: [max_time, batch_size, num_units]
+            # source is the index values mapping to the actual embeddings
             encoder_emb_inp = tf.nn.embedding_lookup(self.embedding, source)
 
             # Encoder_outpus: [max_time, batch_size, num_units]
@@ -180,7 +182,7 @@ class ModelCreator(object):
         if hparams.tgt_max_len_infer:
             maximum_iterations = hparams.tgt_max_len_infer
         else:
-            decoding_length_factor = 2.0
+            decoding_length_factor = 2.0  # Arbitrary
             max_encoder_length = tf.reduce_max(self.batch_input.source_sequence_length)
             maximum_iterations = tf.to_int32(tf.round(
                 tf.to_float(max_encoder_length) * decoding_length_factor))
@@ -299,7 +301,7 @@ class ModelCreator(object):
             keep_prob=hparams.keep_prob)
 
         # Only generate alignment in greedy INFER mode.
-        alignment_history = (not self.training and beam_width == 0)
+        alignment_history = (not self.training and beam_width == 0)  #FALSE
         cell = tf.contrib.seq2seq.AttentionWrapper(
             cell,
             attention_mechanism,

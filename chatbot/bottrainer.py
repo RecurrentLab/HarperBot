@@ -30,7 +30,7 @@ class BotTrainer(object):
             tokenized_data = TokenizedData(corpus_dir=corpus_dir)
 
             self.hparams = tokenized_data.hparams
-            self.train_batch = tokenized_data.get_training_batch()
+            self.train_batch = tokenized_data.get_training_batch()  # Return BatchInput namedtuple from .chatbot/tokenizedata.py
             self.model = ModelCreator(training=True, tokenized_data=tokenized_data,
                                       batch_input=self.train_batch)
 
@@ -82,7 +82,7 @@ class BotTrainer(object):
                     # Finished going through the training dataset. Go to next epoch.
                     train_epoch += 1
 
-                    mean_loss = ckpt_loss / ckpt_predict_count
+                    mean_loss = ckpt_loss / ckpt_predict_count  # Each word (not batch or epoch or even sequence)
                     train_perp = math.exp(float(mean_loss)) if mean_loss < 300 else math.inf
 
                     epoch_dur = time.time() - epoch_start_time

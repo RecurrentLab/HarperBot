@@ -1,6 +1,8 @@
-Data/
 *floyd*
 *tar
 .vscode/
+
 datastore/*
+Data/Corpus/datastore/*
+Data/Corpus/Augment*/*.txt
 

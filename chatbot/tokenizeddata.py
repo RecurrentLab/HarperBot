@@ -274,9 +274,9 @@ def check_vocab(vocab_file):
 def prepare_case_table():
     keys = tf.constant([chr(i) for i in range(32, 127)])
 
-    l1 = [chr(i) for i in range(32, 65)]
-    l2 = [chr(i) for i in range(97, 123)]
-    l3 = [chr(i) for i in range(91, 127)]
+    l1 = [chr(i) for i in range(32, 65)] # Puncutation and Symbols
+    l2 = [chr(i) for i in range(97, 123)] # [a-z]
+    l3 = [chr(i) for i in range(91, 127)] # more punctuation
     values = tf.constant(l1 + l2 + l3)
 
     return tf.contrib.lookup.HashTable(
